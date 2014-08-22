@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+ 
+<hibernate-mapping package="com.fantasyfootball.ultimate.model">
+ 
+    <class name="Position" table="ultimate_position">
+    	<id name="positionId" type="int" column="id">
+            <generator class="assigned"/>
+        </id>
+        <property name="singularName" column="singular_name"/>
+        <property name="singularNameShort" column="singular_name_short" />
+        <property name="pluralName" column="plural_name"/>
+        <property name="pluralNameShort" column="plural_name_short"/>
+    </class>
+ 
+</hibernate-mapping>
