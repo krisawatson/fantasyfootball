@@ -16,10 +16,12 @@ import org.jsoup.select.Elements;
 import com.fantasyfootball.hibernate.FFSPlayerDAO;
 import com.fantasyfootball.hibernate.PlayerDAO;
 import com.fantasyfootball.hibernate.PositionDAO;
+import com.fantasyfootball.hibernate.TeamDAO;
 import com.fantasyfootball.scout.ScrapeData;
 import com.fantasyfootball.scout.model.FFSPlayer;
 import com.fantasyfootball.ultimate.model.Player;
 import com.fantasyfootball.ultimate.model.Position;
+import com.fantasyfootball.ultimate.model.Team;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
@@ -41,6 +43,9 @@ public class ScrapeAllPlayers
 			// Get the position data from ultimate fantasy football
 			List<Position> positionList = getPositions();
 			PositionDAO.save(positionList);
+			// Get the team data from ultimate fantasy football
+			List<Team> teamList = getTeams();
+			TeamDAO.save(teamList);
 			
 			ScrapeData ffsData = new ScrapeData();
 			List<FFSPlayer> ffsProjections = ffsData.getPlayerSats("/projections/season-projections/");
@@ -131,6 +136,45 @@ public class ScrapeAllPlayers
 	            		positionList.add(position);
 	            	}
 	            	return positionList;
+	            }
+			}
+		} catch (IOException e) {
+			System.err.println("Error while trying to open transfers page");
+			System.err.println(e.getLocalizedMessage());
+		} catch (JsonSyntaxException e) {
+			System.err.println("Error while parsing a player");
+			System.err.println(e.getLocalizedMessage());
+		}
+		return null;
+	}
+	
+	private static List<Team> getTeams(){
+		try {
+			Document doc = Jsoup.connect("http://ultimate.premierleague.com/a/squad/transfers")
+					.get();
+			Elements scriptElements = doc.select("script");
+			
+			Element lastScriptTag = scriptElements.last();
+			String scriptContent = lastScriptTag.data();
+            
+			String[] lines = scriptContent.split("\\r?\\n");
+			// Find the json object "elements"
+			Pattern pattern = Pattern.compile("(\"teams\").*\\}], stats");
+
+			for(int i=0; i<lines.length; i++){
+				Matcher matcher = pattern.matcher(lines[i]);
+	
+	            while (matcher.find()) {
+	            	String jsonString = matcher.group();
+	            	JSONObject jsonObj = new JSONObject("{"+jsonString.replace(", stats", "}") + "}");  // Appending the closing bracket after regex matching only part of the string
+	            	JSONArray teams = jsonObj.getJSONArray("element_types");
+	            	List<Team> teamList = new ArrayList<Team>();
+	            	for(int j=0; j<teams.length(); j++){
+	            		Gson gson = new Gson();
+	            		Team team = gson.fromJson(teams.get(j).toString(), Team.class);
+	            		teamList.add(team);
+	            	}
+	            	return teamList;
 	            }
 			}
 		} catch (IOException e) {
