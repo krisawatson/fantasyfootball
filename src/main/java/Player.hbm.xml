@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+ 
+<hibernate-mapping package="com.fantasyfootball.ultimate.model">
+ 
+    <class name="Player" table="ultimate_player">
+    	<id name="id" type="int" column="id">
+            <generator class="native"/>
+        </id>
+        <property name="bigChancesMissed" column="big_chances_missed"/>
+        <property name="selectedByPercent" column="selected_by_percent" />
+        <property name="transfersIn" column="transfers_in"/>
+        <property name="costChangeEvent" column="costChangeEvent"/>
+        <property name="cleanSheets" column="clean_sheets"/>
+        <property name="firstName" column="first_name" />
+        <property name="secondName" column="second_name"/>
+        <property name="transfersInEvent" column="transfers_in_event"/>
+        <property name="eaIndex" column="ea_index"/>
+        <property name="chanceOfPlayingNextRound" column="chance_of_playing_next_round" />
+        <property name="penaltiesMissed" column="penalties_missed" />
+        <property name="redCards" column="red_cards" />
+        <property name="assists" />
+        <property name="costChangeStart" column="cost_change_start" />
+        <property name="form" />
+        <property name="yellowCards" column="yellow_cards" />
+        <property name="status" />
+        <property name="team" />
+        <property name="code" />
+        <property name="elementType" column="element_type" />
+        <property name="eventPoints" column="event_points" />
+        <property name="saves" />
+        <property name="costChangeStartFall" column="cost_change_start_fall" />
+        <property name="penaltiesSaved" column="penalties_saved" />
+        <property name="ownGoals" column="own_goals" />
+        <property name="costChangeEndFall" column="cost_change_end_fall" />
+        <property name="nowCost" column="now_cost" />
+        <property name="openPlayCrosses" column="open_play_crosses" />
+        <property name="valueForm" column="value_form" />
+        <property name="penaltiesConceded" column="penalties_conceded" />
+        <property name="valueSeason" column="value_season" />
+        <property name="inDreamteam" column="in_dream_team" />
+        <property name="webName" column="web_name" />
+        <property name="clearancesBlocksInterceptions" column="clearances_blocks_interceptions" />
+        <property name="epNext" column="ep_next" />
+        <property name="totalPoints" column="total_points" />
+        <property name="goalsConceded" column="goals_conceded" />
+        <property name="pointsPerGame" column="points_per_game" />
+        <property name="recoveries" />
+        <property name="under21" column="under_21" />
+        <property name="transfersOut" column="transfers_out" />
+        <property name="chanceOfPlayingThisRound" column="chance_of_playing_this_round" />
+        <property name="minutes" />
+        <property name="news" />
+        <property name="epThis" column="ep_this" />
+        <property name="transfersOutEvent" column="transfers_out_event" />
+        <property name="photo" />
+        <property name="errorsLeadingToGoal" column="errors_leading_to_goal" />
+        <property name="goalsScored" column="goals_scored" />
+        <property name="bigChancesCreated" column="big_chances_created" />
+        <property name="special" />
+        <property name="keyPasses" column="key_passes" />
+        <property name="dreamteamCount" column="dreamteam_count" />
+    </class>
+ 
+</hibernate-mapping>
