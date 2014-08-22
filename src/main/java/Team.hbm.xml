@@ -17,16 +17,10 @@
         <property name="position" />
         <property name="played" />
         <property name="win" />
-        <property name="lose" />
+        <property name="loss" />
         <property name="draw" />
         <property name="points" />
         <property name="form" />
-        <many-to-one name="currentEventFixtureID" class="com.fantasyfootball.ultimate.model.EventFixture" fetch="select">
-            <column name="current_event_fixture_id" not-null="true" />
-        </many-to-one>
-        <many-to-one name="nextEventFixtureID" class="com.fantasyfootball.ultimate.model.EventFixture" fetch="select">
-            <column name="next_event_fixture_id" not-null="true" />
-        </many-to-one>
     </class>
  
 </hibernate-mapping>

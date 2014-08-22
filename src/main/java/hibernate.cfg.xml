@@ -27,6 +27,7 @@
         <mapping resource="FFSPlayer.hbm.xml"/>
         <mapping resource="Player.hbm.xml"/>
         <mapping resource="Position.hbm.xml"/>
+        <mapping resource="Team.hbm.xml"/>
         
     </session-factory>
 </hibernate-configuration>

@@ -159,15 +159,15 @@ public class ScrapeAllPlayers
             
 			String[] lines = scriptContent.split("\\r?\\n");
 			// Find the json object "elements"
-			Pattern pattern = Pattern.compile("(\"teams\").*\\}], stats");
+			Pattern pattern = Pattern.compile("(\"teams\").*\\}], \"stats");
 
 			for(int i=0; i<lines.length; i++){
 				Matcher matcher = pattern.matcher(lines[i]);
 	
 	            while (matcher.find()) {
 	            	String jsonString = matcher.group();
-	            	JSONObject jsonObj = new JSONObject("{"+jsonString.replace(", stats", "}") + "}");  // Appending the closing bracket after regex matching only part of the string
-	            	JSONArray teams = jsonObj.getJSONArray("element_types");
+	            	JSONObject jsonObj = new JSONObject("{"+jsonString.replace(", \"stats", "}") );  // Appending the closing bracket after regex matching only part of the string
+	            	JSONArray teams = jsonObj.getJSONArray("teams");
 	            	List<Team> teamList = new ArrayList<Team>();
 	            	for(int j=0; j<teams.length(); j++){
 	            		Gson gson = new Gson();

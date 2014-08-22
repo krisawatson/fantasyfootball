@@ -1,5 +1,7 @@
 package com.fantasyfootball.ultimate.model;
 
+import java.util.List;
+
 import com.google.gson.annotations.SerializedName;
 
 public class Team {
@@ -20,10 +22,10 @@ public class Team {
 	private int draw;
 	private int points;
 	private String form;
-	@SerializedName("current_event_fixture")
-	private EventFixture currentEventFixture;
-	@SerializedName("next_event_fixture")
-	private EventFixture nextEventFixture;
+//	@SerializedName("current_event_fixture")
+//	private List<EventFixture> currentEventFixture;
+//	@SerializedName("next_event_fixture")
+//	private List<EventFixture> nextEventFixture;
 	
 	public String getName() {
 		return name;
@@ -109,16 +111,16 @@ public class Team {
 	public void setForm(String form) {
 		this.form = form;
 	}
-	public EventFixture getCurrentEventFixture() {
-		return currentEventFixture;
-	}
-	public void setCurrentEventFixture(EventFixture currentEventFixture) {
-		this.currentEventFixture = currentEventFixture;
-	}
-	public EventFixture getNextEventFixture() {
-		return nextEventFixture;
-	}
-	public void setNextEventFixture(EventFixture nextEventFixture) {
-		this.nextEventFixture = nextEventFixture;
-	}
+//	public List<EventFixture> getCurrentEventFixture() {
+//		return currentEventFixture;
+//	}
+//	public void setCurrentEventFixture(List<EventFixture> currentEventFixture) {
+//		this.currentEventFixture = currentEventFixture;
+//	}
+//	public List<EventFixture> getNextEventFixture() {
+//		return nextEventFixture;
+//	}
+//	public void setNextEventFixture(List<EventFixture> nextEventFixture) {
+//		this.nextEventFixture = nextEventFixture;
+//	}
 }
