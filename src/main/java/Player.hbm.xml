@@ -6,8 +6,8 @@
 <hibernate-mapping package="com.fantasyfootball.ultimate.model">
  
     <class name="Player" table="ultimate_player">
-    	<id name="id" type="int" column="id">
-            <generator class="native"/>
+    	<id name="playerId" type="int" column="id">
+            <generator class="assigned"/>
         </id>
         <property name="bigChancesMissed" column="big_chances_missed"/>
         <property name="selectedByPercent" column="selected_by_percent" />

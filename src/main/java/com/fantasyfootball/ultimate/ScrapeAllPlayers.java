@@ -15,10 +15,11 @@ import org.jsoup.select.Elements;
 
 import com.fantasyfootball.hibernate.FFSPlayerDAO;
 import com.fantasyfootball.hibernate.PlayerDAO;
+import com.fantasyfootball.hibernate.PositionDAO;
 import com.fantasyfootball.scout.ScrapeData;
 import com.fantasyfootball.scout.model.FFSPlayer;
-import com.fantasyfootball.ultimate.constants.FFS;
 import com.fantasyfootball.ultimate.model.Player;
+import com.fantasyfootball.ultimate.model.Position;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
@@ -34,8 +35,12 @@ public class ScrapeAllPlayers
 			// Login to both fantasy premierleague site and fantasy football scout website
     		doLogin();
 			
+    		// Get the list of players from ultimate fantasy football
 			List<Player> playerList = getPlayerList();
 			PlayerDAO.save(playerList);
+			// Get the position data from ultimate fantasy football
+			List<Position> positionList = getPositions();
+			PositionDAO.save(positionList);
 			
 			ScrapeData ffsData = new ScrapeData();
 			List<FFSPlayer> ffsProjections = ffsData.getPlayerSats("/projections/season-projections/");
@@ -46,32 +51,10 @@ public class ScrapeAllPlayers
 			
 			System.out.println(players.size());
 			
-			
-//			if(playerList != null){
-//		    	// Sorts players by total points
-//		    	Collections.sort(playerList, new PlayerTotalPoints());
-//		    	// Sorts players by red cards
-////		    	Collections.sort(playerList, new PlayerRedCards());
-//		    	
-//
-//	    		System.out.println("First Name, Second Name, Assists, Goals, CBI, Recoveries, Key Passes, Total Points");
-//		    	for(int i=0; i<50; i++){
-//		    		Player player = playerList.get(i);
-//		    		System.out.println(player.getFirstName()
-//		    				+ "," + player.getSecondName()
-//		    				+ "," + player.getAssists()
-//		    				+ "," + player.getGoalsScored()
-//		    				+ "," + player.getClearancesBlocksInterceptions()
-//		    				+ "," + player.getRecoveries()
-//		    				+ "," + player.getKeyPasses()
-//		    				+ "," + player.getTotalPoints());
-//		    	}
-//			} else {
-//				System.out.println("Something went wrong while getting the list of players");
-//			}
     	} catch (IOException e) {
 			System.err.println(e.getLocalizedMessage());
 		}
+    	System.exit(0);
     }
     
     
@@ -108,6 +91,46 @@ public class ScrapeAllPlayers
 	            		playerList.add(player);
 	            	}
 	            	return playerList;
+	            }
+			}
+		} catch (IOException e) {
+			System.err.println("Error while trying to open transfers page");
+			System.err.println(e.getLocalizedMessage());
+		} catch (JsonSyntaxException e) {
+			System.err.println("Error while parsing a player");
+			System.err.println(e.getLocalizedMessage());
+		}
+		return null;
+	}
+	
+	
+	private static List<Position> getPositions(){
+		try {
+			Document doc = Jsoup.connect("http://ultimate.premierleague.com/a/squad/transfers")
+					.get();
+			Elements scriptElements = doc.select("script");
+			
+			Element lastScriptTag = scriptElements.last();
+			String scriptContent = lastScriptTag.data();
+            
+			String[] lines = scriptContent.split("\\r?\\n");
+			// Find the json object "elements"
+			Pattern pattern = Pattern.compile("(\"element_types\").*\\}]");
+
+			for(int i=0; i<lines.length; i++){
+				Matcher matcher = pattern.matcher(lines[i]);
+	
+	            while (matcher.find()) {
+	            	String jsonString = matcher.group();
+	            	JSONObject jsonObj = new JSONObject("{"+jsonString + "}");  // Appending the closing bracket after regex matching only part of the string
+	            	JSONArray positions = jsonObj.getJSONArray("element_types");
+	            	List<Position> positionList = new ArrayList<Position>();
+	            	for(int j=0; j<positions.length(); j++){
+	            		Gson gson = new Gson();
+	            		Position position = gson.fromJson(positions.get(j).toString(), Position.class);
+	            		positionList.add(position);
+	            	}
+	            	return positionList;
 	            }
 			}
 		} catch (IOException e) {

@@ -70,7 +70,7 @@ public class Player extends JSONObject{
 	@SerializedName("in_dreamteam")
 	private boolean inDreamteam;
 	@SerializedName("id")
-	private int id;
+	private int playerId;
 	@SerializedName("web_name")
 	private String webName;
 	@SerializedName("clearances_blocks_interceptions")
@@ -306,14 +306,14 @@ public class Player extends JSONObject{
 	public void setInDreamteam(boolean inDreamteam) {
 		this.inDreamteam = inDreamteam;
 	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public String getWebName() {
 		return webName;
+	}
+	public int getPlayerId() {
+		return playerId;
+	}
+	public void setPlayerId(int playerId) {
+		this.playerId = playerId;
 	}
 	public void setWebName(String webName) {
 		this.webName = webName;
