@@ -10,7 +10,7 @@
         <property name="connection.driver_class">org.postgresql.Driver</property>
         <property name="connection.username">fantasy</property>
         <property name="connection.password">TacoChip</property>
-        <property name="connection.url">jdbc:postgresql://localhost:5432/fantasyfootball</property>
+        <property name="connection.url">jdbc:postgresql://kricko.noip.me:5432/fantasyfootball</property>
         <property name="connection_pool_size">10</property>
 
         <property name="hbm2ddl.auto">create</property>

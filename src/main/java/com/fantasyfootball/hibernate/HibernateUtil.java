@@ -1,7 +1,9 @@
 package com.fantasyfootball.hibernate;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 
 public class HibernateUtil {
 	  
@@ -10,9 +12,13 @@ public class HibernateUtil {
     private static SessionFactory buildSessionFactory() {
         try {
             // Create the SessionFactory from hibernate.cfg.xml
-            return new Configuration()
-                    .configure()
-                    .buildSessionFactory();
+        	Configuration configuration = new Configuration();
+            configuration.configure();
+            ServiceRegistry serviceRegistry = 
+            		new StandardServiceRegistryBuilder().applySettings(
+                    configuration.getProperties()).build();
+            SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+            return sessionFactory;
         } catch (Throwable ex) {
             System.err.println("Initial SessionFactory creation failed." + ex);
             throw new ExceptionInInitializerError(ex);
