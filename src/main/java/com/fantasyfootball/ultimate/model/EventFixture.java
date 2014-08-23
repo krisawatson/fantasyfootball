@@ -19,10 +19,10 @@ public class EventFixture {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public boolean isHome() {
+	public boolean getIsHome() {
 		return isHome;
 	}
-	public void setHome(boolean isHome) {
+	public void setIsHome(boolean isHome) {
 		this.isHome = isHome;
 	}
 	public int getMonth() {

@@ -22,8 +22,8 @@ public class Team {
 	private int draw;
 	private int points;
 	private String form;
-//	@SerializedName("current_event_fixture")
-//	private List<EventFixture> currentEventFixture;
+	@SerializedName("current_event_fixture")
+	private List currentEventFixture;
 //	@SerializedName("next_event_fixture")
 //	private List<EventFixture> nextEventFixture;
 	
@@ -111,12 +111,12 @@ public class Team {
 	public void setForm(String form) {
 		this.form = form;
 	}
-//	public List<EventFixture> getCurrentEventFixture() {
-//		return currentEventFixture;
-//	}
-//	public void setCurrentEventFixture(List<EventFixture> currentEventFixture) {
-//		this.currentEventFixture = currentEventFixture;
-//	}
+	public List getCurrentEventFixture() {
+		return currentEventFixture;
+	}
+	public void setCurrentEventFixture(List currentEventFixture) {
+		this.currentEventFixture = currentEventFixture;
+	}
 //	public List<EventFixture> getNextEventFixture() {
 //		return nextEventFixture;
 //	}
